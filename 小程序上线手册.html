@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>微信小程序上线手册 · 主题打卡工作台</title>
+<meta name="theme-color" content="#FDF6F0">
+<meta name="description" content="从注册到发布，8 个步骤，含常见驳回原因与排查表。">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg-romance:#FDF6F0;--text-cocoa:#6B4C40;--gold-ribbon:#EBC97A;
+  --pastel-pink:#FADADD;--pastel-blue:#C6E2FF;--pastel-mint:#D0F0C0;
+  --cream:#FFFCF8;--text-soft:#96766A;--text-faint:#BBA294;
+  --gold-deep:#A8802F;--gold-mid:#C9A24D;
+  --line-gold:rgba(235,201,122,.62);--line-gold-soft:rgba(235,201,122,.4);
+  --line-gold-faint:rgba(235,201,122,.24);
+  --sleep-d:#41689E;--study-d:#9E5568;--tidy-d:#437A5E;
+  --danger:#B5534A;
+  --font-title:"Songti SC","STSong","Source Han Serif SC","Noto Serif SC",SimSun,Georgia,serif;
+  --font-body:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,BlinkMacSystemFont,sans-serif;
+  --shadow:0 10px 30px -18px rgba(107,76,64,.34);
+  --corner:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44' fill='none' stroke='%23EBC97A' stroke-width='1.15' stroke-linecap='round'%3E%3Cpath d='M2.5 41.5C2.5 22 9.5 5.5 30 2.5'/%3E%3Cpath d='M2.5 33C6.5 25 13.5 21 21.5 22' opacity='.6' stroke-width='.9'/%3E%3Cpath d='M11.5 41.5C12.5 34 17.5 29 24.5 29' opacity='.42' stroke-width='.9'/%3E%3Ccircle cx='31' cy='2.6' r='1.9' fill='%23EBC97A' stroke='none'/%3E%3C/svg%3E");
+}
+body{
+  font-family:var(--font-body);color:var(--text-cocoa);font-size:14px;line-height:1.72;min-height:100dvh;
+  background-color:var(--bg-romance);
+  background-image:
+    radial-gradient(circle at 8% 2%,rgba(250,218,221,.62) 0%,rgba(250,218,221,0) 40%),
+    radial-gradient(circle at 94% 0%,rgba(198,226,255,.58) 0%,rgba(198,226,255,0) 38%),
+    radial-gradient(circle at 84% 98%,rgba(208,240,192,.42) 0%,rgba(208,240,192,0) 44%),
+    linear-gradient(180deg,#FDF6F0 0%,#FCF2EC 60%,#FDF4F0 100%);
+  background-attachment:fixed;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:900px;margin:0 auto;padding:34px 22px 80px}
+
+/* hero */
+.hero{
+  position:relative;overflow:hidden;padding:34px 36px;margin-bottom:22px;
+  border:1px solid var(--line-gold);border-radius:26px;
+  background:linear-gradient(145deg,#FFFDFA 0%,#FFF7F1 52%,#FDF0F1 100%);
+  box-shadow:0 1px 0 #fff inset,0 14px 40px -24px rgba(107,76,64,.42);
+}
+.hero::before{content:"";position:absolute;top:-84px;right:-64px;width:280px;height:280px;border-radius:50%;
+  background:radial-gradient(circle,rgba(250,218,221,.7) 0%,rgba(250,218,221,0) 66%);pointer-events:none}
+.hero::after{content:"";position:absolute;left:-56px;bottom:-104px;width:300px;height:186px;
+  border:1px solid var(--line-gold-soft);border-radius:50%;transform:rotate(-15deg);pointer-events:none}
+.kicker{position:relative;display:flex;align-items:center;font-size:10.5px;font-weight:600;letter-spacing:.34em;color:var(--gold-deep)}
+.kicker::before{content:"";width:26px;height:1px;margin-right:9px;background:linear-gradient(90deg,transparent,var(--gold-ribbon))}
+h1{position:relative;font-family:var(--font-title);font-weight:600;font-size:31px;line-height:1.34;letter-spacing:.05em;margin:13px 0 12px}
+.sub{position:relative;font-size:13px;color:var(--text-soft)}
+
+/* card */
+.card{
+  position:relative;padding:24px 26px;margin-bottom:16px;border-radius:22px;
+  background:linear-gradient(180deg,#FFFDFA 0%,#FFF9F4 100%);
+  border:1px solid var(--line-gold);
+  box-shadow:0 1px 0 rgba(255,255,255,.92) inset,inset 0 0 0 4px var(--cream),inset 0 0 0 5px var(--line-gold-faint),var(--shadow);
+}
+.card::after{content:"";position:absolute;bottom:11px;right:11px;width:34px;height:34px;
+  background:var(--corner) no-repeat center/contain;transform:rotate(180deg);opacity:.6;pointer-events:none}
+
+.step-hd{display:flex;gap:14px;align-items:flex-start;margin-bottom:14px}
+.step-n{
+  flex:0 0 auto;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-title);font-size:17px;font-weight:700;color:var(--gold-deep);
+  border:1px solid var(--line-gold);background:linear-gradient(135deg,#FDF6E6,#F8EDD6);
+  box-shadow:0 1px 0 #fff inset;
+}
+.step-n.hot{color:#fff;border-color:var(--danger);background:linear-gradient(135deg,#C97A72,#B5534A)}
+.step-t{font-family:var(--font-title);font-size:17px;font-weight:650;letter-spacing:.04em;line-height:1.4}
+.step-d{font-size:12px;color:var(--text-faint);margin-top:3px}
+
+ol.ul,ul.ul{list-style:none;counter-reset:n}
+ul.ul li{position:relative;padding-left:19px;margin:7px 0;font-size:13.4px;color:#5E4A40}
+ul.ul li::before{content:"";position:absolute;left:2px;top:9px;width:6px;height:6px;border-radius:1px;
+  background:var(--gold-ribbon);transform:rotate(45deg)}
+ol.ul li{position:relative;counter-increment:n;padding-left:30px;margin:9px 0;font-size:13.4px;color:#5E4A40}
+ol.ul li::before{content:counter(n);position:absolute;left:0;top:2px;width:20px;height:20px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--gold-deep);
+  background:#FBF2DC;border:1px solid var(--line-gold-soft)}
+b{font-weight:650;color:var(--text-cocoa)}
+code{font-family:ui-monospace,Consolas,monospace;font-size:12.5px;padding:1px 6px;border-radius:5px;
+  background:#FBF3E8;border:1px solid var(--line-gold-faint);color:#8A6430}
+.note{padding:13px 16px;border-radius:14px;font-size:13px;margin-top:14px;line-height:1.7;
+  background:linear-gradient(135deg,#FFFBF0,#FDF5E4);border:1px solid rgba(235,201,122,.6);color:#7A5E28}
+.note.warn{background:linear-gradient(135deg,#FDF2F0,#FBE9E7);border-color:rgba(201,122,114,.5);color:#9A423A}
+.note.blue{background:linear-gradient(135deg,#F4F8FE,#EDF4FD);border-color:rgba(198,226,255,.9);color:#3F5C86}
+.note.green{background:linear-gradient(135deg,#F2FAF5,#EAF6EE);border-color:rgba(208,240,192,.95);color:#3B6B50}
+
+h2.sec{display:flex;align-items:center;gap:10px;font-family:var(--font-title);font-size:18px;
+  font-weight:650;letter-spacing:.05em;margin:28px 0 14px}
+h2.sec::before{content:"";width:4px;height:17px;border-radius:2px;background:var(--gold-ribbon)}
+
+table{width:100%;border-collapse:separate;border-spacing:0;font-size:13px;background:#FFFDFA;
+  border-radius:14px;overflow:hidden;border:1px solid var(--line-gold-soft)}
+th,td{text-align:left;padding:10px 13px;vertical-align:top;border-bottom:1px solid var(--line-gold-faint)}
+th{font-family:var(--font-title);font-size:12px;font-weight:600;letter-spacing:.05em;color:var(--gold-deep);
+  background:linear-gradient(180deg,#FDF5E6,#FBEFDC)}
+tr:last-child td{border-bottom:none}
+td:first-child{font-weight:600}
+
+/* 勾选 */
+.chk{display:flex;gap:10px;align-items:flex-start;padding:8px 0;cursor:pointer;user-select:none}
+.chk .box{flex:0 0 auto;width:19px;height:19px;margin-top:2px;border-radius:6px;
+  border:1.6px solid rgba(201,162,77,.6);background:#FFFDFA;display:flex;align-items:center;justify-content:center;
+  font-size:12px;color:#fff;transition:all .25s}
+.chk.on .box{background:linear-gradient(135deg,#A8D2B6,#7CAF92);border-color:#7CAF92}
+.chk .tx{font-size:13.4px;color:#5E4A40}
+.chk.on .tx{color:var(--text-faint);text-decoration:line-through}
+
+.tagbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.pill{display:inline-flex;align-items:center;font-size:11.5px;font-weight:600;padding:4px 12px;border-radius:999px;
+  border:1px solid transparent}
+.p-gold{background:linear-gradient(135deg,#FBF2DC,#F7E9C6);color:var(--gold-deep);border-color:var(--line-gold)}
+.p-green{background:#EFF8F3;color:var(--tidy-d);border-color:rgba(147,196,166,.5)}
+.p-pink{background:#FDF2F4;color:var(--study-d);border-color:rgba(224,160,172,.5)}
+.p-blue{background:#EFF4FD;color:var(--sleep-d);border-color:rgba(143,176,224,.5)}
+
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -2px}
+.scroll table{min-width:560px}
+
+.foot{margin-top:34px;padding-top:24px;text-align:center;position:relative}
+.foot::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold-ribbon),transparent)}
+.foot-t{font-family:var(--font-title);font-size:13px;color:var(--text-soft);letter-spacing:.1em}
+.foot-s{font-size:11.5px;color:var(--text-faint);margin-top:6px}
+
+@media(max-width:820px){
+  .wrap{padding:18px 13px 60px}
+  .hero{padding:26px 22px;border-radius:22px}
+  h1{font-size:23px}
+  .card{padding:20px 18px;border-radius:19px}
+  .card::after{width:26px;height:26px;bottom:9px;right:9px;opacity:.45}
+  .step-n{width:33px;height:33px;font-size:15px}
+  .step-t{font-size:15.5px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="kicker">主题打卡工作台 · 配套文档</div>
+    <h1>微信小程序上线手册</h1>
+    <div class="sub">从注册到发布共 8 步 · 前 6 步当天约 40 分钟 · 审核另需 1–3 个工作日</div>
+  </div>
+
+  <!-- ========== 就绪检查 ========== -->
+  <div class="card">
+    <div class="step-hd">
+      <div class="step-n">✓</div>
+      <div>
+        <div class="step-t">代码这边已经准备好了</div>
+        <div class="step-d">下面这些你都不需要做，只是让你心里有数</div>
+      </div>
+    </div>
+    <ul class="ul">
+      <li>项目在 <code>小程序版/</code> 目录，共 10 个文件，直接可导入</li>
+      <li><b>无需登录</b>、无网络请求、不收集任何用户信息 —— 这点在审核时是加分项</li>
+      <li>所有数据用 <code>wx.setStorageSync</code> 保存在手机本地，不上传服务器</li>
+      <li><b>没有使用 web-view</b>（个人主体小程序本来就禁用这个组件，已规避）</li>
+      <li>计划数据与网页版完全一致：9 周任务 + 9 组工具盘点表</li>
+      <li><code>appid</code> 现在填的是 <code>touristappid</code>（占位），导入时开发者工具会让你换成自己的</li>
+    </ul>
+    <div class="note green">一句话：代码是成品，你只需要走一遍「注册 → 导入 → 提交审核」的行政流程。</div>
+  </div>
+
+  <!-- ========== 1 ========== -->
+  <div class="card">
+    <div class="step-hd">
+      <div class="step-n">1</div>
+      <div>
+        <div class="step-t">注册小程序账号</div>
+        <div class="step-d">约 10 分钟 · 需要：一个全新邮箱 + 身份证 + 本人微信</div>
+      </div>
+    </div>
+    <ol class="ul">
+      <li>电脑浏览器打开 <code>mp.weixin.qq.com</code>，点右上角「立即注册」，选择<b>「小程序」</b></li>
+      <li>填邮箱 —— <b>必须是从来没注册过微信公众平台的邮箱</b>。最省事的办法是现注册一个 QQ 邮箱</li>
+      <li>去邮箱点激活链接，回到注册页继续</li>
+      <li>主体类型选<b>「个人」</b></li>
+      <li>填身份证姓名 + 号码，用<b>本人微信扫码</b>做身份验证</li>
+      <li>填手机号收验证码</li>
+      <li>设置小程序名称（见下方注意事项），完成后就进后台了</li>
+    </ol>
+    <div class="note"><b>不花钱。</b>个人主体小程序做不了微信认证，所以也不存在那 300 元认证费。个人主体是完全免费的。</div>
+    <div class="note warn"><b>名称要慎重：</b>个人主体的名称<b>一年只能改 2 次</b>，而且不能和已有小程序重名。「主题打卡工作台」很可能已被占用，先想好 2–3 个备选，例如：<b>小小打卡手册 / 日常三件事 / 今日三格 / 三月计划本</b>。</div>
+  </div>
+
+  <!-- ========== 2 ========== -->
+  <div class="card">
+    <div class="step-hd">
+      <div class="step-n">2</div>
+      <div>
+        <div class="step-t">拿到 AppID</div>
+        <div class="step-d">约 2 分钟</div>
+      </div>
+    </div>
+    <ol class="ul">
+      <li>登录 <code>mp.weixin.qq.com</code>（用刚注册的邮箱）</li>
+      <li>左侧菜单 →「<b>开发管理</b>」→「<b>开发设置</b>」</li>
+      <li>在「开发者 ID」里找到 <b>AppID(小程序ID)</b>，形如 <code>wx</code> 开头的一串字符</li>
+      <li>复制它，第 4 步要用</li>
+    </ol>
+    <div class="note warn">同页还有一个 <b>AppSecret</b>。这个工具<b>完全不需要 AppSecret</b>，不要复制、不要发给任何人（包括我）。</div>
+  </div>
+
+  <!-- ========== 3 ========== -->
+  <div class="card">
+    <div class="step-hd">
+      <div class="step-n">3</div>
+      <div>
+        <div class="step-t">安装微信开发者工具</div>
+        <div class="step-d">约 10 分钟（下载看网速）</div>
+      </div>
+    </div>
+    <ol class="ul">
+      <li>打开 <code>developers.weixin.qq.com/miniprogram/dev/devtools/download.html</code></li>
+      <li>选「<b>稳定版 Stable Build</b>」→ <b>Windows 64</b> 下载安装</li>
+      <li>首次打开需要<b>微信扫码登录</b> —— 用注册账号时那个微信</li>
+    </ol>
+    <div class="note blue">这是官方 IDE，装完大概 1GB 左右。如果你电脑是 Mac，选 macOS 版本即可。</div>
+  </div>
+
+  <!-- ========== 4 ========== -->
+  <div class="card">
+    <div class="step-hd">
+      <div class="step-n hot">4</div>
+      <div>
+        <div class="step-t">导入项目</div>
+        <div class="step-d">约 3 分钟 · 这一步最容易出错，仔细看</div>
+      </div>
+    </div>
+    <ol class="ul">
+      <li>点左上角「<b>+</b>」新建项目（选「导入项目」也行）</li>
+      <li><b>目录</b>：选择 <code>小程序版</code> 这个文件夹<br><span style="color:var(--text-faint);font-size:12.5px">注意是选到「小程序版」这一层，不要再往里点进 pages</span></li>
+      <li><b>AppID</b>：粘贴第 2 步复制的那串</li>
+      <li><b>后端服务</b>：选「<b>不使用云服务</b>」</li>
+      <li>点「确定」，等它编译几秒</li>
+    </ol>
+    <div class="note green"><b>怎么判断导入成功：</b>左侧文件树能看到 <code>pages/index</code>，中间模拟器出现<b>米白底色 + 金色边框</b>的界面，顶部有「早睡 · 备考 · 全屋整理」标题。看到这个就成了。</div>
+    <div class="note warn"><b>选错目录会报</b>「app.json 未找到」—— 这不是代码问题，重新导入、目录选到 <code>小程序版</code> 即可。</div>
+  </div>
+
+  <!-- ========== 5 ========== -->
+  <div class="card">
+    <div class="step-hd">
+      <div class="step-n">5</div>
+      <div>
+        <div class="step-t">真机预览，确认在手机上正常</div>
+        <div class="step-d">约 5 分钟</div>
+      </div>
+    </div>
+    <ol class="ul">
+      <li>点工具上方的「<b>预览</b>」按钮</li>
+      <li>用手机微信扫出现的二维码</li>
+      <li>在手机上都点一遍：<b>今日打卡 / 全览日历 / 睡眠记录 / 方案说明 / 工具清单</b></li>
+      <li><b>重点测这个：</b>勾几个任务打勾 → 完全退出小程序 → 再打开 → 看勾还留着吗</li>
+    </ol>
+    <div class="note blue">预览版二维码只有你自己的微信能扫开，别人扫是无效的，不用担心被人看到。这一步是提审前最后一次自检，务必走完。</div>
+  </div>
+
+  <!-- ========== 6 ========== -->
+  <div class="card">
+    <div class="step-hd">
+      <div class="step-n">6</div>
+      <div>
+        <div class="step-t">上传代码</div>
+        <div class="step-d">约 3 分钟</div>
+      </div>
+    </div>
+    <ol class="ul">
+      <li>点开发者工具<b>右上角</b>的「<b>上传</b>」</li>
+      <li>版本号填 <code>1.0.0</code></li>
+      <li>项目备注填「首个版本」</li>
+      <li>确定，等进度条走完</li>
+    </ol>
+    <div class="note">上传成功后，去 mp 后台「管理 → 版本管理」，能在「开发版本」里看到这个 1.0.0。</div>
+  </div>
+
+  <!-- ========== 7 ========== -->
+  <div class="card">
+    <div class="step-hd">
+      <div class="step-n hot">7</div>
+      <div>
+        <div class="step-t">提交审核</div>
+        <div class="step-d">约 10 分钟 · 整个流程里最容易被驳回的一步</div>
+      </div>
+    </div>
+    <ol class="ul">
+      <li>mp 后台 → 左侧「<b>管理</b>」→「<b>版本管理</b>」→ 开发版本 →「<b>提交审核</b>」</li>
+      <li><b>功能页面</b>：选择 <code>pages/index/index</code></li>
+      <li><b>服务类目</b>：选「<b>工具 → 效率</b>」；如果这个子类目不可选，就选「<b>工具 → 其他</b>」</li>
+      <li><b>标签</b>：填「打卡」「日程」「计划」这类中性词</li>
+      <li><b>测试账号</b>：留空。<b>不要编造账号密码</b></li>
+      <li><b>审核备注</b>：照抄下面这段</li>
+    </ol>
+    <div class="note green"><b>审核备注（直接复制）：</b><br>本小程序为个人日程与习惯打卡工具，<b>无需登录即可使用</b>，打开即为功能首页。所有用户填写的数据均通过 wx.setStorageSync 保存在用户手机本地，不上传任何服务器，不收集任何个人信息，无网络请求，无社交与支付功能。</div>
+    <div class="note warn">
+      <b>两个必避的坑：</b><br>
+      ① <b>绝对不要选「健康管理」「医疗」「教育」类目</b> —— 这些需要资质，个人主体选了必被驳回。<br>
+      ② <b>简介和备注里不要出现「考试」「备考」「复习」</b> 这类词，容易被判到教育类目。就用「日程」「习惯」「计划」来表述。
+    </div>
+  </div>
+
+  <!-- ========== 8 ========== -->
+  <div class="card">
+    <div class="step-hd">
+      <div class="step-n">8</div>
+      <div>
+        <div class="step-t">发布</div>
+        <div class="step-d">1 分钟 · 前提是审核已通过</div>
+      </div>
+    </div>
+    <ol class="ul">
+      <li>审核通过后，mp 后台「版本管理」里会出现「审核版本」</li>
+      <li>点「<b>发布</b>」</li>
+      <li>之后在微信里搜小程序名称，或从「发现 → 小程序 → 最近使用」都能打开</li>
+    </ol>
+    <div class="note green">发布后它就是永久稳定的了，不再依赖任何沙箱或临时链接。</div>
+  </div>
+
+  <!-- ========== 驳回 ========== -->
+  <h2 class="sec">常见驳回原因与改法</h2>
+  <div class="card">
+    <div class="scroll">
+      <table>
+        <tr><th style="width:190px">驳回理由</th><th>真实原因</th><th>怎么改</th></tr>
+        <tr><td>服务类目与内容不符</td><td>类目选错了，或选到了需要资质的类目</td><td>改成「工具 → 效率」或「工具 → 其他」，重新提交</td></tr>
+        <tr><td>小程序简介含违规内容</td><td>简介里提到了考试 / 教育相关表述</td><td>改成中性的工具描述，如「个人日程与习惯打卡工具」</td></tr>
+        <tr><td>未配置用户隐私保护指引</td><td>微信强制要求，从 2023 年起所有小程序都要填</td><td>后台「设置 → 服务内容声明 → 用户隐私保护指引」，声明<b>不收集任何信息</b>，提交后即可</td></tr>
+        <tr><td>名称与已有小程序重复</td><td>重名</td><td>换备选名称。个人主体一年只有 2 次改名机会，第一次就选好</td></tr>
+        <tr><td>功能无法正常体验</td><td>审核员打开后不知道干什么，或以为要登录</td><td>在审核备注里写清「无需登录，打开即用，所有数据保存在本机」（上面那段可直接用）</td></tr>
+        <tr><td>涉及健康 / 医疗内容</td><td>「早睡」「作息」被理解成健康管理</td><td>把相关表述改成「作息打卡」「日常计划」，类目保持在工具类</td></tr>
+      </table>
+    </div>
+    <div class="note">被驳回不用慌，绝大多数是类目或简介的表述问题，改完重新提交就行，不影响你继续用网页版。</div>
+  </div>
+
+  <!-- ========== 排查 ========== -->
+  <h2 class="sec">开发者工具常见报错</h2>
+  <div class="card">
+    <div class="scroll">
+      <table>
+        <tr><th style="width:210px">现象</th><th>原因</th><th>解决</th></tr>
+        <tr><td>报错「app.json 未找到」</td><td>导入时目录选深了一层或选到了父目录</td><td>重新导入，目录精确选到 <code>小程序版</code></td></tr>
+        <tr><td>报错找不到 pages/index/index</td><td>文件被误删或没完整复制</td><td>检查 <code>小程序版/pages/index/</code> 下是否有 4 个文件：index.js / index.json / index.wxml / index.wxss</td></tr>
+        <tr><td>模拟器一片空白</td><td>调试基础库版本过低</td><td>右上角「详情 → 本地设置」，把调试基础库调到 <b>3.0 以上</b></td></tr>
+        <tr><td>提示 wx.getStorageSync 相关警告</td><td>正常的 API 调用提示</td><td>不用管，不影响功能</td></tr>
+        <tr><td>界面样式不对 / 颜色丢失</td><td>基础库过旧，不支持 CSS 变量</td><td>同样是把调试基础库调到 3.0 以上</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ========== 时间 ========== -->
+  <h2 class="sec">时间怎么安排</h2>
+  <div class="card">
+    <div class="tagbar">
+      <span class="pill p-green">第 1–6 步：当天约 40 分钟</span>
+      <span class="pill p-pink">第 7 步审核：1–3 个工作日</span>
+      <span class="pill p-blue">被驳回重提：再加 1–3 天</span>
+    </div>
+    <ul class="ul">
+      <li><b>建议在 9 月内把 1–7 步走完。</b>留出被驳回重提的缓冲，别等到 11 月考试前才折腾</li>
+      <li>审核提交后你什么都不用做，等通知就行。这段时间网页版照常用</li>
+      <li>如果 11 月前还没发布成功，直接用网页版或把 HTML 存到手机上，不影响三个目标的执行</li>
+    </ul>
+    <div class="note blue">工具永远只是工具。<b>早睡、备考、整理这三件事本身的节奏，不要因为等小程序审核而停下来。</b></div>
+  </div>
+
+  <!-- ========== 打印清单 ========== -->
+  <h2 class="sec">照着做 · 打勾清单</h2>
+  <div class="card">
+    <div id="checklist">
+      <div class="chk" data-k="c1"><div class="box"></div><div class="tx">1. 注册小程序账号（个人主体，新邮箱 + 身份证 + 微信扫码）</div></div>
+      <div class="chk" data-k="c2"><div class="box"></div><div class="tx">2. 想好 2–3 个备选名称，确定一个没被占用的</div></div>
+      <div class="chk" data-k="c3"><div class="box"></div><div class="tx">3. 拿到 AppID（开发管理 → 开发设置）</div></div>
+      <div class="chk" data-k="c4"><div class="box"></div><div class="tx">4. 下载安装微信开发者工具（稳定版 Windows 64）</div></div>
+      <div class="chk" data-k="c5"><div class="box"></div><div class="tx">5. 导入项目：目录选到「小程序版」这一层，后端服务选「不使用云服务」</div></div>
+      <div class="chk" data-k="c6"><div class="box"></div><div class="tx">6. 真机预览：五个页签都点一遍，勾选后退出重进验证数据留存</div></div>
+      <div class="chk" data-k="c7"><div class="box"></div><div class="tx">7. 上传代码，版本号 1.0.0</div></div>
+      <div class="chk" data-k="c8"><div class="box"></div><div class="tx">8. 配置用户隐私保护指引（设置 → 服务内容声明）</div></div>
+      <div class="chk" data-k="c9"><div class="box"></div><div class="tx">9. 提交审核：类目选「工具 → 效率」，测试账号留空，备注照抄</div></div>
+      <div class="chk" data-k="c10"><div class="box"></div><div class="tx">10. 审核通过后点「发布」</div></div>
+    </div>
+    <div class="note green" style="margin-top:18px">打勾状态会自动保存在本机，关掉页面再打开还在。</div>
+  </div>
+
+  <div class="foot">
+    <div class="foot-t">2026 · 主题打卡计划工作台 · 配套文档</div>
+    <div class="foot-s">配套项目位于 <code>小程序版/</code> 目录 · 数据仅保存在本机</div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  var KEY='wb-mini-guide-v1';
+  var S={};
+  try{var r=localStorage.getItem(KEY);if(r)S=JSON.parse(r)||{};}catch(e){}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+  var box=document.getElementById('checklist');
+  function render(){
+    var list=box.querySelectorAll('.chk');
+    for(var i=0;i<list.length;i++){
+      var on=!!S[list[i].getAttribute('data-k')];
+      list[i].className='chk'+(on?' on':'');
+      list[i].querySelector('.box').textContent=on?'✓':'';
+    }
+  }
+  box.addEventListener('click',function(e){
+    var el=e.target.closest('.chk');if(!el)return;
+    var k=el.getAttribute('data-k');
+    if(S[k])delete S[k];else S[k]=1;
+    save();render();
+  });
+  render();
+})();
+</script>
+</body>
+</html>

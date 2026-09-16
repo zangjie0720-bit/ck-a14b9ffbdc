@@ -1,0 +1,17 @@
+{
+  "pages": [
+    "pages/index/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#FDF6F0",
+    "navigationBarTitleText": "主题打卡工作台",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#FDF6F0",
+    "backgroundColorTop": "#FDF6F0",
+    "backgroundColorBottom": "#FDF6F0"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

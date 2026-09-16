@@ -1,0 +1,15 @@
+# 本地工具目录（含会话记忆，不推送）
+.workbuddy/
+
+# CloudStudio 部署用的临时副本，内容与 index.html 相同
+web/
+
+# 临时脚本
+_*.js
+*.tmp
+*.log
+
+# 系统文件
+.DS_Store
+Thumbs.db
+desktop.ini

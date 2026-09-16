@@ -1,0 +1,656 @@
+/* =========================================================
+   首页 · 洛可可浪漫叙事
+   ========================================================= */
+
+/* ---------------- 顶部主视觉 ---------------- */
+.hero{
+  position:relative;
+  overflow:hidden;
+  padding:46rpx 40rpx 44rpx;
+  margin-bottom:26rpx;
+  border-radius:40rpx;
+  border:1rpx solid var(--line-gold);
+  background:#FFFDFA;
+  box-shadow:0 16rpx 50rpx -32rpx rgba(107,76,64,.5);
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  top:-110rpx;
+  right:-90rpx;
+  width:400rpx;
+  height:400rpx;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(250,218,221,.75) 0%,rgba(250,218,221,0) 66%);
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  left:-80rpx;
+  bottom:-130rpx;
+  width:430rpx;
+  height:260rpx;
+  border:1rpx solid var(--line-gold-soft);
+  border-radius:50%;
+  transform:rotate(-15deg);
+}
+.kicker{
+  position:relative;
+  display:flex;
+  align-items:center;
+  font-size:19rpx;
+  font-weight:600;
+  letter-spacing:.32em;
+  color:var(--gold-deep);
+}
+.kicker::before{
+  content:"";
+  width:44rpx;
+  height:2rpx;
+  margin-right:16rpx;
+  background:var(--gold-ribbon);
+}
+.h1{
+  position:relative;
+  display:flex;
+  align-items:baseline;
+  flex-wrap:wrap;
+  margin:22rpx 0 16rpx;
+}
+.hl{
+  font-family:var(--font-title);
+  font-size:58rpx;
+  font-weight:600;
+  letter-spacing:.06em;
+}
+.hl-sleep{ color:var(--sleep-d); }
+.hl-study{ color:var(--study-d); }
+.hl-tidy{  color:var(--tidy-d); }
+.hsep{
+  font-size:34rpx;
+  color:var(--gold-ribbon);
+  margin:0 14rpx;
+}
+.sub{
+  position:relative;
+  font-size:24rpx;
+  color:var(--text-soft);
+}
+
+/* ---------------- 统计 ---------------- */
+.stats{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  margin-bottom:8rpx;
+}
+.stat{
+  width:48.5%;
+  box-sizing:border-box;
+  padding:24rpx 26rpx;
+  margin-bottom:20rpx;
+  border-radius:26rpx;
+  border:1rpx solid var(--line-gold-soft);
+  background:#FFFDFA;
+}
+.stat .n{
+  font-family:var(--font-title);
+  font-size:44rpx;
+  font-weight:700;
+  line-height:1.2;
+  color:var(--text-cocoa);
+}
+.stat .n .u{
+  font-family:var(--font-body);
+  font-size:22rpx;
+  font-weight:500;
+  color:var(--text-soft);
+  margin-left:2rpx;
+}
+.stat .l{
+  font-size:21rpx;
+  color:var(--text-faint);
+  margin-top:6rpx;
+  letter-spacing:.04em;
+}
+
+/* ---------------- 页签 ---------------- */
+.tabs{
+  display:flex;
+  flex-wrap:wrap;
+  margin:14rpx 0 20rpx;
+}
+.tab{
+  padding:16rpx 32rpx;
+  margin:0 16rpx 16rpx 0;
+  border-radius:99rpx;
+  font-size:26rpx;
+  color:var(--text-soft);
+  border:1rpx solid var(--line-gold);
+  background:#FFFDFA;
+}
+.tab.on{
+  color:#5A4028;
+  font-weight:600;
+  border-color:var(--gold-mid);
+  background:#EBC97A;
+}
+
+/* ---------------- 日期条 ---------------- */
+.datebar{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.nav-btn{
+  padding:14rpx 26rpx;
+  margin-right:16rpx;
+  border-radius:99rpx;
+  font-size:25rpx;
+  color:var(--text-soft);
+  border:1rpx solid var(--line-gold-soft);
+  background:#FFFDFA;
+}
+.nav-today{
+  margin-right:0;
+  margin-left:auto;
+}
+.jump{
+  padding:14rpx 30rpx;
+  border-radius:99rpx;
+  font-size:25rpx;
+  color:var(--text-cocoa);
+  border:1rpx solid var(--line-gold);
+  background:#FDF6EE;
+}
+
+/* ---------------- 今日 ---------------- */
+.today-top{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  margin-bottom:22rpx;
+}
+.today-l{ margin-bottom:12rpx; }
+.today-date{
+  font-family:var(--font-title);
+  font-size:52rpx;
+  font-weight:700;
+  letter-spacing:.06em;
+  line-height:1.2;
+}
+.today-meta{
+  font-size:24rpx;
+  color:var(--text-soft);
+  margin-top:8rpx;
+}
+.bar-wrap{ width:100%; }
+.bar-l{
+  display:flex;
+  justify-content:space-between;
+  font-size:22rpx;
+  color:var(--text-soft);
+  margin-bottom:10rpx;
+}
+.bar{
+  height:14rpx;
+  border-radius:99rpx;
+  background:#F5EDE4;
+  overflow:hidden;
+}
+.bar-i{
+  height:100%;
+  border-radius:99rpx;
+  background:#EBC97A;
+}
+.phase-note{
+  font-size:24rpx;
+  color:var(--text-soft);
+  margin-top:18rpx;
+  line-height:1.7;
+}
+
+/* ---------------- 就寝记录 ---------------- */
+.slrow{
+  display:flex;
+  flex-wrap:wrap;
+  padding:22rpx 24rpx;
+  border-radius:26rpx;
+  border:1rpx dashed var(--line-gold);
+  background:#FFFCF7;
+}
+.slbtn{
+  padding:14rpx 28rpx;
+  margin:0 16rpx 14rpx 0;
+  border-radius:99rpx;
+  font-size:25rpx;
+  color:var(--text-soft);
+  border:1rpx solid var(--line-gold-soft);
+  background:#FFFDFA;
+}
+.slbtn.on{
+  color:#fff;
+  font-weight:600;
+  border-color:transparent;
+}
+.slbtn[data-k="0"].on{ background:#7CAF92; }
+.slbtn[data-k="1"].on{ background:#DCB663; color:#5A4028; }
+.slbtn[data-k="2"].on{ background:#D48C9C; }
+.slbtn[data-k="3"].on{ background:#B07A7A; }
+.slhint{
+  font-size:23rpx;
+  color:var(--text-faint);
+  margin-top:16rpx;
+}
+
+/* ---------------- 任务 ---------------- */
+.task{
+  display:flex;
+  align-items:flex-start;
+  padding:26rpx 30rpx;
+  margin-bottom:14rpx;
+  border-radius:28rpx;
+  border:1rpx solid var(--line-gold-soft);
+  background:#FFFDFA;
+}
+.task.done{
+  background:#FDFAF6;
+  opacity:.55;
+}
+.cb{
+  width:40rpx;
+  height:40rpx;
+  flex-shrink:0;
+  margin-top:2rpx;
+  border-radius:50%;
+  border:2rpx solid rgba(201,162,77,.6);
+  background:#FFFDFA;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22rpx;
+  color:#fff;
+}
+.task.m .cb{ border-color:rgba(143,176,224,.85); }
+.task.s .cb{ border-color:rgba(224,160,172,.9); }
+.task.z .cb{ border-color:rgba(147,196,166,.9); }
+.task.m.done .cb{ background:#7C9DD4; border-color:#7C9DD4; }
+.task.s.done .cb{ background:#D48C9C; border-color:#D48C9C; }
+.task.z.done .cb{ background:#7CAF92; border-color:#7CAF92; }
+.tx{
+  flex:1;
+  padding:0 18rpx;
+  font-size:27rpx;
+  line-height:1.65;
+}
+.task.done .tx{
+  text-decoration:line-through;
+  color:var(--text-faint);
+}
+.tmin{
+  flex-shrink:0;
+  font-size:22rpx;
+  color:var(--text-faint);
+  margin-top:4rpx;
+}
+
+/* ---------------- 日历 ---------------- */
+.calhd-row{
+  display:flex;
+  margin-bottom:12rpx;
+}
+.calhd{
+  width:14.2857%;
+  text-align:center;
+  font-family:var(--font-title);
+  font-size:23rpx;
+  font-weight:600;
+  color:var(--gold-deep);
+}
+.calgrid{
+  display:flex;
+  flex-wrap:wrap;
+}
+.cell-wrap{
+  width:14.2857%;
+  padding:4rpx;
+  box-sizing:border-box;
+}
+.cell{
+  position:relative;
+  overflow:hidden;
+  min-height:106rpx;
+  padding:11rpx;
+  border-radius:20rpx;
+  border:1rpx solid var(--line-gold-soft);
+  background:#FFFDFA;
+}
+.cell.out{
+  background:#F8F2EC;
+  border-color:transparent;
+  opacity:.45;
+}
+.cell.trip{
+  background:#FCEFF2;
+  border-color:rgba(250,218,221,.9);
+}
+.cell.today{
+  border:2rpx solid var(--gold-ribbon);
+}
+.cell .cd{
+  font-family:var(--font-title);
+  font-size:24rpx;
+  font-weight:600;
+  line-height:1.3;
+}
+.cell .cm{
+  font-size:17rpx;
+  color:var(--text-faint);
+  transform:scale(.92);
+  transform-origin:left top;
+  white-space:nowrap;
+}
+.cell .cp{
+  position:absolute;
+  left:11rpx;
+  right:11rpx;
+  bottom:11rpx;
+  height:6rpx;
+  border-radius:99rpx;
+  background:#F5EDE4;
+  overflow:hidden;
+}
+.cell .cp-i{
+  height:100%;
+  border-radius:99rpx;
+  background:#EBC97A;
+}
+.cell.full .cp-i{ background:#7CAF92; }
+
+.legend{
+  display:flex;
+  flex-wrap:wrap;
+}
+.lg{
+  display:flex;
+  align-items:center;
+  margin:0 28rpx 10rpx 0;
+  font-size:23rpx;
+  color:var(--text-soft);
+}
+.lgsq{
+  width:22rpx;
+  height:22rpx;
+  margin-right:12rpx;
+  border-radius:6rpx;
+  border:1rpx solid var(--line-gold-soft);
+}
+.sq-trip{ background:#FCEFF2; }
+.sq-today{ background:#FFFDFA; border:3rpx solid var(--gold-ribbon); }
+.sq-full{ background:#7CAF92; border-color:#7CAF92; }
+
+/* 关键节点 */
+.ms{
+  display:flex;
+  align-items:flex-start;
+  padding:18rpx 0;
+  border-bottom:1rpx dashed var(--line-gold-faint);
+}
+.ms:last-child{ border-bottom:none; }
+.ms-d{
+  flex-shrink:0;
+  width:190rpx;
+  font-family:var(--font-title);
+  font-size:24rpx;
+  font-weight:600;
+  color:var(--gold-deep);
+  line-height:1.6;
+}
+.ms-d.hot{ color:var(--study-d); }
+.ms-t{
+  flex:1;
+  font-size:25rpx;
+  color:#5E4A40;
+  line-height:1.65;
+}
+
+/* ---------------- 睡眠图 ---------------- */
+.chart{
+  display:flex;
+  align-items:flex-end;
+  height:280rpx;
+  padding:16rpx 0;
+  border-bottom:1rpx solid var(--line-gold-soft);
+}
+.sbar{
+  flex:1;
+  margin:0 1rpx;
+  min-width:4rpx;
+  border-radius:4rpx 4rpx 0 0;
+  background:#F0E8E0;
+}
+.axis{
+  display:flex;
+  margin-top:12rpx;
+}
+.axis-i{
+  flex:1;
+  min-width:4rpx;
+  font-size:15rpx;
+  color:var(--text-faint);
+  text-align:center;
+  transform:scale(.9);
+}
+.dist{
+  display:flex;
+  flex-wrap:wrap;
+  margin-top:24rpx;
+}
+.dbox{
+  width:48.5%;
+  box-sizing:border-box;
+  padding:22rpx 24rpx;
+  margin-bottom:18rpx;
+  border-radius:26rpx;
+  border:1rpx solid var(--line-gold-soft);
+  background:#FFFCF8;
+}
+.dbox .n{
+  font-family:var(--font-title);
+  font-size:36rpx;
+  font-weight:700;
+}
+.dbox .l{
+  font-size:21rpx;
+  color:var(--text-faint);
+  margin-top:4rpx;
+}
+.sleep-sum{
+  font-size:25rpx;
+  color:var(--text-soft);
+  text-align:center;
+}
+
+/* 阶梯表 */
+.lad{
+  padding:20rpx 0;
+  border-bottom:1rpx dashed var(--line-gold-faint);
+}
+.lad:last-child{ border-bottom:none; }
+.lad-h{
+  display:flex;
+  align-items:baseline;
+  margin-bottom:8rpx;
+}
+.lad-w{
+  font-family:var(--font-title);
+  font-size:27rpx;
+  font-weight:600;
+  margin-right:20rpx;
+}
+.lad-r{
+  font-size:22rpx;
+  color:var(--text-faint);
+  margin-right:20rpx;
+}
+.lad-t{
+  font-family:var(--font-title);
+  font-size:30rpx;
+  font-weight:700;
+  color:var(--sleep-d);
+  margin-left:auto;
+}
+.lad-n{
+  font-size:24rpx;
+  color:var(--text-soft);
+  line-height:1.65;
+}
+
+/* ---------------- 方案页 ---------------- */
+.rhythm{
+  padding:20rpx 0;
+  border-bottom:1rpx dashed var(--line-gold-faint);
+}
+.rhythm:last-child{ border-bottom:none; }
+.rh-h{
+  display:flex;
+  align-items:baseline;
+  margin-bottom:8rpx;
+}
+.rh-p{
+  font-family:var(--font-title);
+  font-size:28rpx;
+  font-weight:600;
+  margin-right:20rpx;
+}
+.rh-d{
+  font-size:22rpx;
+  color:var(--gold-deep);
+}
+.rh-b{
+  font-size:25rpx;
+  color:#5E4A40;
+  line-height:1.7;
+}
+
+.sched{
+  padding:20rpx 0;
+  border-bottom:1rpx dashed var(--line-gold-faint);
+}
+.sched:last-child{ border-bottom:none; }
+.sc-h{
+  display:flex;
+  align-items:baseline;
+  margin-bottom:8rpx;
+}
+.sc-t{
+  font-family:var(--font-title);
+  font-size:25rpx;
+  font-weight:600;
+  color:var(--gold-deep);
+  margin-right:20rpx;
+}
+.sc-s{
+  font-size:26rpx;
+  font-weight:600;
+}
+.sc-b{
+  font-size:24rpx;
+  color:#5E4A40;
+  line-height:1.7;
+}
+
+/* ---------------- 工具盘点 ---------------- */
+.tg{
+  font-family:var(--font-title);
+  font-size:25rpx;
+  font-weight:600;
+  letter-spacing:.06em;
+  color:var(--gold-deep);
+  margin:28rpx 0 16rpx;
+}
+.tg:first-child{ margin-top:0; }
+.twrap{
+  display:flex;
+  flex-wrap:wrap;
+}
+.ti{
+  padding:14rpx 26rpx;
+  margin:0 16rpx 16rpx 0;
+  border-radius:99rpx;
+  font-size:24rpx;
+  color:var(--text-soft);
+  border:1rpx solid var(--line-gold-soft);
+  background:#FFFDFA;
+}
+.ti.on{
+  color:#3B6B50;
+  font-weight:600;
+  border-color:rgba(147,196,166,.95);
+  background:#EAF6EE;
+}
+
+.gap{
+  padding:20rpx 0;
+  border-bottom:1rpx dashed var(--line-gold-faint);
+}
+.gap:last-child{ border-bottom:none; }
+.gap-h{
+  display:flex;
+  align-items:baseline;
+  margin-bottom:8rpx;
+}
+.gap-p{
+  flex-shrink:0;
+  font-size:20rpx;
+  font-weight:600;
+  padding:4rpx 14rpx;
+  border-radius:8rpx;
+  margin-right:16rpx;
+}
+.gap-p.p0{ background:#FBE9E7; color:#B5534A; }
+.gap-p.p1{ background:#FBF2DC; color:#94702B; }
+.gap-n{
+  font-size:26rpx;
+  font-weight:600;
+  flex:1;
+}
+.gap-price{
+  font-size:23rpx;
+  color:var(--gold-deep);
+  font-weight:600;
+}
+.gap-d{
+  font-size:24rpx;
+  color:var(--text-soft);
+  line-height:1.65;
+}
+
+/* ---------------- 页脚 ---------------- */
+.foot{
+  padding:50rpx 20rpx 30rpx;
+  text-align:center;
+}
+.foot-rule{
+  height:1rpx;
+  margin:0 auto 34rpx;
+  background:linear-gradient(90deg,rgba(235,201,122,0),#EBC97A,rgba(235,201,122,0));
+}
+.foot-t{
+  font-family:var(--font-title);
+  font-size:26rpx;
+  color:var(--text-soft);
+  letter-spacing:.12em;
+}
+.foot-s{
+  font-size:22rpx;
+  color:var(--text-faint);
+  margin-top:14rpx;
+  line-height:1.9;
+}
+.foot-s2{
+  font-size:21rpx;
+  color:var(--text-faint);
+  margin-top:6rpx;
+}

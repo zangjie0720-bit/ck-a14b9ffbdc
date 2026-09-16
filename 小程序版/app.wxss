@@ -1,0 +1,190 @@
+/* =========================================================
+   洛可可浪漫叙事 · 全局样式
+   bg #FDF6F0 / text #6B4C40 / gold #EBC97A
+   注意：小程序不支持 :root，CSS 变量定义在 page 上
+   ========================================================= */
+page{
+  /* 设计系统 */
+  --bg-romance:#FDF6F0;
+  --text-cocoa:#6B4C40;
+  --gold-ribbon:#EBC97A;
+  --pastel-pink:#FADADD;
+  --pastel-blue:#C6E2FF;
+  --pastel-mint:#D0F0C0;
+
+  /* 派生色 */
+  --cream:#FFFCF8;
+  --text-soft:#96766A;
+  --text-faint:#BBA294;
+  --gold-deep:#A8802F;
+  --gold-mid:#C9A24D;
+  --line-gold:rgba(235,201,122,.62);
+  --line-gold-soft:rgba(235,201,122,.42);
+  --line-gold-faint:rgba(235,201,122,.24);
+
+  /* 三个目标 · 粉彩系 */
+  --sleep:#8FB0E0;  --sleep-l:#EFF4FD;  --sleep-d:#41689E;
+  --study:#E0A0AC;  --study-l:#FDF2F4;  --study-d:#9E5568;
+  --tidy:#93C4A6;   --tidy-l:#EFF8F3;   --tidy-d:#437A5E;
+
+  /* 标题用衬线体（洛可可气质），正文用无衬线（可读性优先） */
+  --font-title:"Songti SC","STSong",Georgia,serif;
+  --font-body:-apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+
+  background-color:var(--bg-romance);
+  color:var(--text-cocoa);
+  font-family:var(--font-body);
+  font-size:28rpx;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+
+.wrap{
+  padding:34rpx 26rpx 60rpx;
+  min-height:100vh;
+}
+
+/* ---------------- 卡片：双层金框 ---------------- */
+.card{
+  position:relative;
+  padding:36rpx 32rpx;
+  margin-bottom:26rpx;
+  border-radius:30rpx;
+  border:1rpx solid var(--line-gold);
+  background:#FFFDFA;
+  box-shadow:0 12rpx 40rpx -26rpx rgba(107,76,64,.45);
+}
+.card::after{
+  content:"";
+  position:absolute;
+  right:16rpx;
+  bottom:16rpx;
+  width:52rpx;
+  height:52rpx;
+  opacity:.5;
+  border-bottom:2rpx solid var(--gold-ribbon);
+  border-right:2rpx solid var(--gold-ribbon);
+  border-bottom-right-radius:26rpx;
+}
+.card-hd{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  margin-bottom:22rpx;
+}
+.card-title{
+  font-family:var(--font-title);
+  font-size:34rpx;
+  font-weight:600;
+  letter-spacing:.06em;
+  line-height:1.4;
+}
+.card-sub{
+  font-size:23rpx;
+  color:var(--text-faint);
+  margin-top:8rpx;
+}
+
+/* 小节标题（金色四瓣花饰 + 文字） */
+.sec{
+  display:flex;
+  align-items:center;
+  font-family:var(--font-title);
+  font-size:31rpx;
+  font-weight:600;
+  letter-spacing:.06em;
+  margin-bottom:22rpx;
+}
+.sec::before{
+  content:"";
+  width:14rpx;
+  height:14rpx;
+  margin-right:16rpx;
+  background:var(--gold-ribbon);
+  transform:rotate(45deg);
+  border-radius:2rpx;
+  flex-shrink:0;
+}
+
+/* 金色分隔线 */
+.rule{
+  height:1rpx;
+  margin:30rpx 0;
+  background:linear-gradient(90deg,transparent,var(--gold-ribbon),transparent);
+}
+
+/* ---------------- 标签 ---------------- */
+.pill{
+  display:inline-block;
+  padding:6rpx 20rpx;
+  border-radius:99rpx;
+  font-size:22rpx;
+  font-weight:600;
+  border:1rpx solid transparent;
+  flex-shrink:0;
+}
+.p-sleep{ background:var(--sleep-l); color:var(--sleep-d); border-color:rgba(143,176,224,.5); }
+.p-study{ background:var(--study-l); color:var(--study-d); border-color:rgba(224,160,172,.5); }
+.p-tidy{  background:var(--tidy-l);  color:var(--tidy-d);  border-color:rgba(147,196,166,.5); }
+.p-trip{  background:#FBF4EE; color:#9C8676; border-color:rgba(235,201,122,.4); }
+.p-gold{  background:#FBF2DC; color:var(--gold-deep); border-color:var(--line-gold); }
+
+/* ---------------- 提示块 ---------------- */
+.note{
+  padding:26rpx 28rpx;
+  border-radius:22rpx;
+  font-size:25rpx;
+  line-height:1.72;
+  background:#FFFBF0;
+  border:1rpx solid rgba(235,201,122,.6);
+  color:#7A5E28;
+}
+.note-blue{
+  background:#F4F8FE;
+  border-color:rgba(198,226,255,.95);
+  color:#3F5C86;
+}
+.note-green{
+  background:#F2FAF5;
+  border-color:rgba(208,240,192,.95);
+  color:#3B6B50;
+}
+
+/* ---------------- 列表条目 ---------------- */
+.li{
+  position:relative;
+  padding-left:32rpx;
+  margin:14rpx 0;
+  font-size:26rpx;
+  color:#5E4A40;
+}
+.li::before{
+  content:"";
+  position:absolute;
+  left:4rpx;
+  top:16rpx;
+  width:12rpx;
+  height:12rpx;
+  border-radius:2rpx;
+  background:var(--gold-ribbon);
+  transform:rotate(45deg);
+}
+.li .b{ color:var(--text-cocoa); font-weight:600; }
+
+/* ---------------- 按钮 ---------------- */
+.btn{
+  display:inline-block;
+  padding:16rpx 34rpx;
+  border-radius:99rpx;
+  font-size:26rpx;
+  color:var(--text-soft);
+  border:1rpx solid var(--line-gold-soft);
+  background:#FFFDFA;
+  line-height:1.6;
+}
+.btn-on{
+  color:#5A4028;
+  font-weight:600;
+  border-color:var(--gold-mid);
+  background:#EBC97A;
+}

@@ -1,0 +1,289 @@
+<view class="wrap">
+
+  <!-- ============ 顶部主视觉 ============ -->
+  <view class="hero">
+    <view class="kicker">主题打卡计划工作台</view>
+    <view class="h1">
+      <text class="hl hl-sleep">早睡</text>
+      <text class="hsep">·</text>
+      <text class="hl hl-study">备考</text>
+      <text class="hsep">·</text>
+      <text class="hl hl-tidy">全屋整理</text>
+    </view>
+    <view class="sub">2026.09.15 — 11.15 · 共 62 天</view>
+  </view>
+
+  <!-- ============ 统计 ============ -->
+  <view class="stats">
+    <view class="stat">
+      <view class="n">{{stats.pct}}<text class="u">%</text></view>
+      <view class="l">总完成度</view>
+    </view>
+    <view class="stat">
+      <view class="n">{{stats.done}}<text class="u">/{{stats.total}}</text></view>
+      <view class="l">今日任务</view>
+    </view>
+    <view class="stat">
+      <view class="n">{{stats.sleepRate}}</view>
+      <view class="l">早睡达标率</view>
+    </view>
+    <view class="stat">
+      <view class="n">{{stats.daysLeft}}<text class="u">天</text></view>
+      <view class="l">距笔试开考</view>
+    </view>
+  </view>
+
+  <!-- ============ 页签 ============ -->
+  <view class="tabs">
+    <view class="tab {{tab==='today'?'on':''}}" data-t="today" bindtap="onTab">今日打卡</view>
+    <view class="tab {{tab==='cal'?'on':''}}" data-t="cal" bindtap="onTab">全览日历</view>
+    <view class="tab {{tab==='sleep'?'on':''}}" data-t="sleep" bindtap="onTab">睡眠记录</view>
+    <view class="tab {{tab==='plan'?'on':''}}" data-t="plan" bindtap="onTab">方案说明</view>
+    <view class="tab {{tab==='tools'?'on':''}}" data-t="tools" bindtap="onTab">工具清单</view>
+  </view>
+
+  <!-- ============ 今日打卡 ============ -->
+  <block wx:if="{{tab==='today'}}">
+
+    <view class="card">
+      <view class="datebar">
+        <view class="nav-btn" bindtap="prevDay">前一天</view>
+        <picker mode="date" value="{{cur}}" start="{{start}}" end="{{end}}" bindchange="onPick">
+          <view class="jump">{{cur}}</view>
+        </picker>
+        <view class="nav-btn" bindtap="nextDay">后一天</view>
+        <view class="nav-btn nav-today" bindtap="gotoToday">今天</view>
+      </view>
+    </view>
+
+    <view class="card">
+      <view class="today-top">
+        <view class="today-l">
+          <view class="today-date">{{curLabel}}</view>
+          <view class="today-meta">{{curMeta}}</view>
+        </view>
+        <view class="bar-wrap">
+          <view class="bar-l"><text>当日进度</text><text>{{doneCount}} / {{curTasks.length}}</text></view>
+          <view class="bar"><view class="bar-i" style="width:{{curPct}}%"></view></view>
+        </view>
+      </view>
+      <view class="pill {{phaseCls}}">{{phaseText}}</view>
+      <view class="phase-note" wx:if="{{phaseNote}}">{{phaseNote}}</view>
+    </view>
+
+    <view class="card">
+      <view class="sec">就寝记录</view>
+      <view class="slrow">
+        <view class="slbtn {{sleepVal===0?'on':''}}" data-k="0" bindtap="onSleep">按时达标</view>
+        <view class="slbtn {{sleepVal===1?'on':''}}" data-k="1" bindtap="onSleep">稍晚</view>
+        <view class="slbtn {{sleepVal===2?'on':''}}" data-k="2" bindtap="onSleep">熬夜</view>
+        <view class="slbtn {{sleepVal===3?'on':''}}" data-k="3" bindtap="onSleep">严重</view>
+      </view>
+      <view class="slhint">{{sleepHint}}</view>
+    </view>
+
+    <view class="card">
+      <view class="card-hd">
+        <view>
+          <view class="card-title">今日任务</view>
+          <view class="card-sub">点一下就打勾，进度自动保存在本机</view>
+        </view>
+      </view>
+      <view wx:if="{{curTasks.length===0}}" class="note">这天在计划范围之外。</view>
+      <view wx:for="{{curTasks}}" wx:key="idx"
+            class="task {{item.c}} {{item.done?'done':''}}"
+            data-i="{{index}}" bindtap="onTask">
+        <view class="cb">{{item.done?'✓':''}}</view>
+        <view class="tx">{{item.t}}</view>
+        <view class="tmin">{{item.m}}</view>
+      </view>
+    </view>
+
+  </block>
+
+  <!-- ============ 全览日历 ============ -->
+  <block wx:elif="{{tab==='cal'}}">
+
+    <view class="card">
+      <view class="card-hd">
+        <view>
+          <view class="card-title">62 天总览</view>
+          <view class="card-sub">格子里横条 = 当天完成度，点格子跳到那天</view>
+        </view>
+        <view class="pill p-gold">{{calSum}}</view>
+      </view>
+      <view class="calhd-row">
+        <view class="calhd" wx:for="{{weekHeads}}" wx:key="*this">{{item}}</view>
+      </view>
+      <view class="calgrid">
+        <view class="cell-wrap" wx:for="{{calCells}}" wx:key="key" data-d="{{item.d}}" bindtap="onCell">
+          <view class="cell {{item.cls}}">
+            <view class="cd">{{item.day}}</view>
+            <view class="cm">{{item.meta}}</view>
+            <view class="cp"><view class="cp-i" style="width:{{item.pct}}%"></view></view>
+          </view>
+        </view>
+      </view>
+      <view class="rule"></view>
+      <view class="legend">
+        <view class="lg"><view class="lgsq sq-trip"></view><text>旅行期</text></view>
+        <view class="lg"><view class="lgsq sq-today"></view><text>今天</text></view>
+        <view class="lg"><view class="lgsq sq-full"></view><text>全部完成</text></view>
+      </view>
+    </view>
+
+    <view class="card">
+      <view class="sec">关键节点</view>
+      <view class="ms" wx:for="{{milestones}}" wx:key="d">
+        <view class="ms-d {{item.hot?'hot':''}}">{{item.d}}</view>
+        <view class="ms-t">{{item.t}}</view>
+      </view>
+    </view>
+
+  </block>
+
+  <!-- ============ 睡眠记录 ============ -->
+  <block wx:elif="{{tab==='sleep'}}">
+
+    <view class="card">
+      <view class="card-hd">
+        <view>
+          <view class="card-title">就寝达标情况</view>
+          <view class="card-sub">柱子越高＝当晚越晚睡，颜色代表是否达标</view>
+        </view>
+      </view>
+      <view class="chart">
+        <view class="sbar" wx:for="{{sleepBars}}" wx:key="d"
+              style="height:{{item.h}}rpx;background:{{item.bg}}"></view>
+      </view>
+      <view class="axis">
+        <view class="axis-i" wx:for="{{sleepBars}}" wx:key="d">{{item.ax}}</view>
+      </view>
+      <view class="dist">
+        <view class="dbox" wx:for="{{sleepDist}}" wx:key="l">
+          <view class="n" style="color:{{item.c}}">{{item.n}}</view>
+          <view class="l">{{item.l}}</view>
+        </view>
+      </view>
+      <view class="rule"></view>
+      <view class="sleep-sum">{{sleepSum}}</view>
+    </view>
+
+    <view class="card">
+      <view class="sec">阶梯式前移表</view>
+      <view class="lad" wx:for="{{ladRows}}" wx:key="k">
+        <view class="lad-h">
+          <text class="lad-w">{{item.w}}</text>
+          <text class="lad-r">{{item.range}}</text>
+          <text class="lad-t">{{item.target}}</text>
+        </view>
+        <view class="lad-n">{{item.note}}</view>
+      </view>
+    </view>
+
+  </block>
+
+  <!-- ============ 方案说明 ============ -->
+  <block wx:elif="{{tab==='plan'}}">
+
+    <view class="card">
+      <view class="card-title">三个目标的总体节奏</view>
+      <view class="card-sub">工作日 20:00 到家，周末双休可加长时间</view>
+      <view class="rule"></view>
+      <view class="rhythm" wx:for="{{rhythm}}" wx:key="k">
+        <view class="rh-h"><text class="rh-p">{{item.phase}}</text><text class="rh-d">{{item.date}}</text></view>
+        <view class="rh-b">{{item.desc}}</view>
+      </view>
+      <view class="note" style="margin-top:22rpx">工作日 20:00 到家 → 20:00–20:45 吃饭收拾 → 20:45–21:30 备考 → 21:30–22:00 微整理 → 22:00–22:30 洗澡 → 22:30 起手机移出卧室 → 目标时间就寝。</view>
+    </view>
+
+    <view class="card">
+      <view class="sec">目标一 · 早睡恢复</view>
+      <view class="li" wx:for="{{planSleep}}" wx:key="t">
+        <text class="b">{{item.t}}：</text>{{item.d}}
+      </view>
+    </view>
+
+    <view class="card">
+      <view class="sec">目标二 · 导游证备考</view>
+      <view class="li" wx:for="{{planStudy}}" wx:key="t">
+        <text class="b">{{item.t}}：</text>{{item.d}}
+      </view>
+      <view class="note" style="margin-top:22rpx">面试紧随笔试（11.22–11.29），中间几乎没有准备时间。科目五必须从 10 月底就并行开始背讲解词。</view>
+    </view>
+
+    <view class="card">
+      <view class="sec">目标三 · 全屋整理</view>
+      <view class="li" wx:for="{{planTidy}}" wx:key="t">
+        <text class="b">{{item.t}}：</text>{{item.d}}
+      </view>
+    </view>
+
+    <view class="card">
+      <view class="sec">空间排期</view>
+      <view class="sched" wx:for="{{schedule}}" wx:key="k">
+        <view class="sc-h"><text class="sc-t">{{item.date}}</text><text class="sc-s">{{item.space}}</text></view>
+        <view class="sc-b">{{item.desc}}</view>
+      </view>
+      <view class="note note-green" style="margin-top:22rpx">4㎡ 衣帽间用现有的 2 个双层衣架 + 2 个 1.5m 落地衣架重组，约 7 米挂杆，零成本。汉服必须用宽肩衣架，落地衣架需贴墙 + 底层压重防倾倒。</view>
+    </view>
+
+  </block>
+
+  <!-- ============ 工具清单 ============ -->
+  <block wx:elif="{{tab==='tools'}}">
+
+    <view class="card">
+      <view class="card-hd">
+        <view>
+          <view class="card-title">现有工具盘点表</view>
+          <view class="card-sub">有就点一下打勾，会自动保存在本机</view>
+        </view>
+        <view class="pill p-tidy">{{toolSum}}</view>
+      </view>
+      <block wx:for="{{toolGroups}}" wx:key="g" wx:for-item="grp">
+        <view class="tg">{{grp.g}}</view>
+        <view class="twrap">
+          <view class="ti {{it.on?'on':''}}" wx:for="{{grp.items}}" wx:key="k"
+                wx:for-item="it" data-k="{{it.k}}" bindtap="onTool">{{it.on?'✓ ':''}}{{it.t}}</view>
+        </view>
+      </block>
+    </view>
+
+    <view class="card">
+      <view class="card-hd">
+        <view>
+          <view class="card-title">缺口清单 · 1k 以内</view>
+          <view class="card-sub">只列盘点后确认没有的，分两档买</view>
+        </view>
+      </view>
+      <view class="gap" wx:for="{{gaps}}" wx:key="name">
+        <view class="gap-h">
+          <text class="gap-p {{item.lv==='必买'?'p0':'p1'}}">{{item.lv}}</text>
+          <text class="gap-n">{{item.name}}</text>
+          <text class="gap-price">{{item.price}}</text>
+        </view>
+        <view class="gap-d">{{item.desc}}</view>
+      </view>
+      <view class="note" style="margin-top:26rpx">9 月先把「必买」三样买掉（约 ¥300–450），这是唯一不能等的部分。按目前报的情况（衣架已有、不要电子箱），实际很可能只花 ¥300 出头。</view>
+    </view>
+
+    <view class="card">
+      <view class="sec">工具为什么没利用起来</view>
+      <view class="li" wx:for="{{whyTools}}" wx:key="t">
+        <text class="b">{{item.t}}：</text>{{item.d}}
+      </view>
+    </view>
+
+  </block>
+
+  <!-- ============ 页脚 ============ -->
+  <view class="foot">
+    <view class="foot-rule"></view>
+    <view class="foot-t">2026 · 主题打卡计划工作台</view>
+    <view class="foot-s">早睡 · 备考 · 全屋整理</view>
+    <view class="foot-s">数据仅保存在本机，不上传任何服务器</view>
+    <view class="foot-s2">2026.09.15 — 2026.11.15 · 共 62 天</view>
+  </view>
+
+</view>
