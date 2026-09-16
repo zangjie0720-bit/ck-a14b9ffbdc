@@ -64,17 +64,23 @@ body{
   font-size:14px;line-height:1.72;
   min-height:100dvh;
   background-color:var(--bg-romance);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+/* 背景渐变放在固定层，而不是挂 body 的 background-image 上。
+   原因：iOS Safari 不支持 body 的 background-attachment:fixed，
+   会把背景区域拉伸到整篇文档高度，导致整页泛色、晕染全糊掉。 */
+body::before{
+  content:"";position:fixed;top:0;left:0;right:0;bottom:0;
+  z-index:0;pointer-events:none;
   background-image:
     radial-gradient(circle at 8% 2%, rgba(250,218,221,.62) 0%, rgba(250,218,221,0) 40%),
     radial-gradient(circle at 94% 0%, rgba(198,226,255,.58) 0%, rgba(198,226,255,0) 38%),
     radial-gradient(circle at 84% 98%, rgba(208,240,192,.42) 0%, rgba(208,240,192,0) 44%),
     radial-gradient(circle at 2% 88%, rgba(250,218,221,.42) 0%, rgba(250,218,221,0) 40%),
     linear-gradient(180deg,#FDF6F0 0%,#FCF2EC 60%,#FDF4F0 100%);
-  background-attachment:fixed;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
 }
-.wrap{max-width:1200px;margin:0 auto;padding:34px 22px 72px}
+.wrap{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:34px 22px 72px}
 
 /* ---------------- 顶部主视觉 ---------------- */
 .hero{
