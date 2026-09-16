@@ -1149,7 +1149,7 @@ function renderWeek(){
     var inRange=(s>=START&&s<=END);
     var cls='wkday'+(s===cur?' on':'')+(isTrip(s)?' trip':'');
     h+='<div class="'+cls+'" data-d="'+s+'" style="'+(inRange?'':'opacity:.4')+'">'+
-       '<div class="w">'+WD[wd]+'</div><div class="d">'+dd.getMonth()+1+'/'+dd.getDate()+'</div></div>';
+       '<div class="w">'+WD[wd]+'</div><div class="d">'+(dd.getMonth()+1)+'/'+dd.getDate()+'</div></div>';
   }
   $('wk').innerHTML=h;
 }
